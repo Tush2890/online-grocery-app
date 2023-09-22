@@ -7,7 +7,7 @@ export const Footer = () => {
             <div className='container'>
                 <div className='row py-2 mt-2'>
                     <div className='col-lg-3 d-flex flex-column'>
-                        <h5>Food Delivery App</h5>
+                        <h5>BHUKKAD</h5>
                         <span>&copy; 2023 All Rights Reserved</span>
                     </div>
                     <div className='col-lg-3 d-flex flex-column'>

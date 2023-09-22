@@ -19,7 +19,7 @@ type Props = {
 export const Product = ({ item }: Props) => {
 
     const dispatch = useAppDispatch();
-    
+
     const [itemCount, setItemCount] = useState(0);
 
     return (
@@ -43,7 +43,7 @@ export const Product = ({ item }: Props) => {
                                 setItemCount(itemCount - 1);
                                 dispatch(productRemoved({ id: item.id }));
                             }}
-                            btnText={'-'} />
+                        >-</Button>
                         <input type='text' className='form-control px-2 noBorderRadius' value={itemCount} readOnly={true} />
                         <Button
                             btnClassnames={'btn-primary noBorderRadius'}
@@ -51,7 +51,7 @@ export const Product = ({ item }: Props) => {
                                 setItemCount(itemCount + 1);
                                 dispatch(productAdded({ id: item.id }));
                             }}
-                            btnText={'+'} />
+                        >+</Button>
                     </div>
                 </div>
             </div>

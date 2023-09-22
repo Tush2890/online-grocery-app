@@ -3,3 +3,13 @@
     text-align: left;
     padding: 2rem;
 }
+
+.noFlexWrap {
+    flex-wrap: nowrap;
+}
+
+.btnLinkStyle {
+    text-decoration: none;
+    top: -1px;
+    position: relative;
+}
