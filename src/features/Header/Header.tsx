@@ -1,11 +1,17 @@
 import React from 'react';
 import './Header.css';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/store';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
 
-    const cartCount = useAppSelector((state) => state.cart.count);
+    const cartProducts = useAppSelector(state => state.cart.products);
+
+    const getCartCount = () => {
+        let totalNumberofProducts = 0;
+        cartProducts.forEach(prod => totalNumberofProducts += prod.count);
+        return totalNumberofProducts;
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,7 +34,7 @@ export const Header = () => {
                                     src={`${process.env.PUBLIC_URL}/shopping-cart.svg`}
                                     width={30} height={30}
                                 />
-                                <span className='badge'>{cartCount}</span>
+                                <span className='badge'>{getCartCount()}</span>
                             </Link>
                         </li>
                     </ul>
