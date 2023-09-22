@@ -1,11 +1,7 @@
-.noBorderRadius {
-    border-radius: 0 !important;
-}
-
 .fitContentHeight {
     height: fit-content;
 }
 
-.w-30{
+.w30{
     width: 30%;
 }

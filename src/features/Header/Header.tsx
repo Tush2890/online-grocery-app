@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './Header.css';
 import { useAppSelector } from '../../redux/hooks';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
 
@@ -13,18 +14,22 @@ export const Header = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="menuItems">
+                    <input type='text' className='w-50 form-control mx-auto' placeholder='Search by category or name' />
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
+                            <Link className="nav-link" aria-current="page" to="/">Help</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">ContactUs</a>
+                            <Link className="nav-link" to="#">Sign In</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <img src={`${process.env.PUBLIC_URL}/shopping-cart.svg`} width={30} height={30} />
+                            <Link className="nav-link" to="/checkout">
+                                <img
+                                    src={`${process.env.PUBLIC_URL}/shopping-cart.svg`}
+                                    width={30} height={30}
+                                />
                                 <span className='badge'>{cartCount}</span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

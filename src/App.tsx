@@ -1,14 +1,19 @@
 import React, { createContext } from 'react';
 import './App.css';
-import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer';
-import { MainBody } from './components/MainBody/MainBody';
+import { Header } from './features/Header/Header';
+import { Footer } from './features/Footer/Footer';
+import { Routes, Route } from 'react-router-dom';
+import { Cart } from './features/Cart/cart';
+import { MainBody } from './features/MainBody/MainBody';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <MainBody />
+      <Routes>
+        <Route path='/' element={<MainBody />} />
+        <Route path='/checkout' element={<Cart />} />
+      </Routes>
       <Footer />
     </div>
   );

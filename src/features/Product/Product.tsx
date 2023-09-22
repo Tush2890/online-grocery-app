@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
 import { ITEM_ADDED, ITEM_REMOVED } from '../../utils/constants';
+import { Button } from '../../components/Button';
+import style from './Product.module.css';
 
 type Props = {
     item: {
@@ -32,25 +34,23 @@ export const Product = ({ item }: Props) => {
                         <h5 className="text-start">{item.title}</h5>
                         <p className="text-start">{item.category}</p>
                     </div>
-                    <div className='w-30 d-inline-flex fitContentHeight'>
-                        <button
-                            className='btn btn-primary noBorderRadius'
-                            disabled={itemCount === 0}
-                            onClick={() => {
+                    <div className={`${style.w30} d-inline-flex ${style.fitContentHeight}`}>
+                        <Button
+                            btnClassnames={'btn-primary noBorderRadius'}
+                            btnDisabled={itemCount === 0}
+                            btnOnClick={() => {
                                 setItemCount(itemCount - 1);
                                 dispatch({ type: ITEM_REMOVED });
-                            }}>
-                            -
-                        </button>
+                            }}
+                            btnText={'-'} />
                         <input type='text' className='form-control px-2 noBorderRadius' value={itemCount} readOnly={true} />
-                        <button
-                            className='btn btn-primary noBorderRadius'
-                            onClick={() => {
+                        <Button
+                            btnClassnames={'btn-primary noBorderRadius'}
+                            btnOnClick={() => {
                                 setItemCount(itemCount + 1);
                                 dispatch({ type: ITEM_ADDED });
-                            }}>
-                            +
-                        </button>
+                            }}
+                            btnText={'+'} />
                     </div>
                 </div>
             </div>
