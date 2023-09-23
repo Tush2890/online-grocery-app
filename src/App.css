@@ -29,10 +29,6 @@ footer h5 {
   cursor: pointer;
 }
 
-.nav-link {
-  color: #fff;
-}
-
 .card {
   -webkit-transition: all .5s;
   -moz-transition: all .5s;

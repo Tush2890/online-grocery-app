@@ -11,7 +11,7 @@ export const Home = () => {
     return (
         <>
             <div className={`${style.home}`}>
-                <Header />
+                <Header headerClassNames={style.headerStyle}/>
                 <div className='row p-5'>
                     <h1 className={`${style.h1}`}>BHUKKAD</h1>
                     <h2>Discover the best food & drinks</h2>

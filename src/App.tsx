@@ -4,7 +4,7 @@ import { Footer } from './features/Footer';
 import { Routes, Route } from 'react-router-dom';
 import { Cart } from './features/Cart';
 import { Home } from './features/Home';
-import { MainBody } from './features/MainBody';
+import { OrderOnline } from './features/OrderOnline';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <div className='header-body'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/order-food-online' element={<MainBody />} />
+          <Route path='/order-food-online' element={<OrderOnline />} />
           <Route path='/checkout' element={<Cart />} />
         </Routes>
       </div>
