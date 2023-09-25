@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '../../components/Button';
 import { Product } from '../../utils/data';
 import { ProductItem } from '../ProductItem';
+import { Toast } from '../../components/Toast';
+import { useAppSelector } from '../../redux/store';
+import style from './product.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     restaurantImage: string | undefined;
@@ -12,6 +16,10 @@ type Props = {
 }
 
 export const MyProduct = ({ restaurantImage, restaurantName, restaurantCategory, location, products }: Props) => {
+    const navigate = useNavigate();
+    const cartProducts = useAppSelector(state => state.cart.products);
+    let totalItemsCount = 0;
+    cartProducts.forEach(item => totalItemsCount += item.count);
     return (
         <div className='container'>
             <div className='row text-start'>
@@ -28,9 +36,16 @@ export const MyProduct = ({ restaurantImage, restaurantName, restaurantCategory,
                 <h2 className='mt-4'><b>Order Online</b></h2>
                 <div className='d-flex flex-column'>
                     {products.map(prod => {
-                        return <ProductItem key={prod.id} prod={prod}/>
+                        return <ProductItem key={prod.id} prod={prod} />
                     })}
                 </div>
+                <Toast className={totalItemsCount > 0 ? 'show' : 'hide'}>
+                    {totalItemsCount} item(s) added in your cart
+                    <div className='ms-auto cursor-pointer' onClick={() => navigate('checkout')}>
+                        <img src={`${process.env.PUBLIC_URL}/shopping-cart.svg`} width={30} height={30} />
+                        <span className={`${style.badge}`}>{totalItemsCount}</span>
+                    </div>
+                </Toast>
             </div>
         </div>
     )

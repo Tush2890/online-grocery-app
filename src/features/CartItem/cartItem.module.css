@@ -1,0 +1,28 @@
+.w3Rem {
+    width: 3rem;
+}
+
+.incDecBorder {
+    border: 1px solid #198754;
+    height: 40%;
+    width: min-content;
+    border-radius: var(--bs-border-radius);
+}
+
+.noBgOnHover:hover,
+.noBgOnHover:active {
+    background-color: #fff !important;
+    color: #198754 !important;
+}
+
+.inputTxtColor {
+    color: #198754;
+}
+
+.inputTxtColor:focus-visible {
+    outline: 0;
+}
+
+.h40 {
+    height: 40%;
+}

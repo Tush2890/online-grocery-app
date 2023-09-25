@@ -21,7 +21,7 @@ export const products: Array<Product> = [
     {
         id: 'item1',
         restaurantId: 'rest1',
-        name: 'Margherita Pizza',
+        name: 'Margherita Pizza fdlkfnlfndsfdsffdsnlfndlkfndsfldksflkd',
         price: '135',
         currency: 'Rupees',
         rating: '4.1',

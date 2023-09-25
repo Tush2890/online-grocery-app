@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Product } from '../../utils/data';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import style from './productItem.module.css';
@@ -6,6 +6,7 @@ import { CURRENCY } from '../../utils/constants';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { productAdded, productRemoved } from '../../redux/cart.slice';
+import { CartItem } from '../CartItem';
 
 type Props = {
     prod: Product
@@ -15,7 +16,7 @@ export const ProductItem = ({ prod }: Props) => {
     const dispatch = useAppDispatch();
     const cartProducts = useAppSelector(state => state.cart.products);
 
-    const getCartCount = () => {
+    const getItemCount = () => {
         const product = cartProducts.find(product => product.id === prod.id);
         let productItemCount = product?.count || 0;
         return productItemCount;
@@ -32,7 +33,7 @@ export const ProductItem = ({ prod }: Props) => {
             </div>
         );
     }
-    const productItemCount = getCartCount();
+    const productItemCount = getItemCount();
     return (
         <div className='d-flex gap-2'>
             <img
@@ -43,24 +44,16 @@ export const ProductItem = ({ prod }: Props) => {
                 {getRatingStars(prod.rating)}
                 <p>{CURRENCY[prod.currency]}{prod.price}</p>
             </div>
-
-            {productItemCount === 0 && <Button btnClassnames={`btn btn-outline-success px-5 ${style.h40}`}
-                btnOnClick={() => {
-                    dispatch(productAdded({ id: prod.id }));
-                }}>ADD</Button>}
-            {productItemCount > 0 && <div className={`d-flex ${style.incDecBorder}`}>
-                <Button btnClassnames={`btn btn-outline-success noBorder ${style.noBgOnHover}`}
-                    btnOnClick={() => dispatch(productRemoved({ id: prod.id }))}
-                ><i className='fa-solid fa-minus'></i>
-                </Button>
-                <Input type='text' classNames={`noBorder px-3 ${style.w3Rem} ${style.inputTxtColor}`} value={productItemCount} />
-                <Button btnClassnames={`btn btn-outline-success noBorder ${style.noBgOnHover}`}
+            {
+                productItemCount === 0 && <Button btnClassnames={`btn btn-outline-success px-5 ${style.h40}`}
                     btnOnClick={() => {
                         dispatch(productAdded({ id: prod.id }));
-                    }}><i className='fa-solid fa-plus'></i>
-                </Button>
-            </div>}
 
+                    }}>ADD</Button>
+            }
+            {
+                productItemCount > 0 && <CartItem productItemCount={productItemCount} productItemId={prod.id} />
+            }
         </div>
     )
 }

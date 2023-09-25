@@ -13,3 +13,10 @@
     top: -1px;
     position: relative;
 }
+
+.productItemName {
+    max-width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
