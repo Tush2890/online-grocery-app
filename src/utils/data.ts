@@ -1,50 +1,120 @@
-export const items = [
+export interface Product {
+    id: string;
+    restaurantId: string;
+    name: string;
+    price: string;
+    currency: string;
+    rating: string;
+    description: string;
+    isVeg: boolean
+}
+
+export interface Restaurant {
+    id: string;
+    name: string;
+    items: Product[];
+    category: string[];
+    rating: string;
+}
+
+export const products: Array<Product> = [
     {
         id: 'item1',
-        image: 'bhojanalaya.avif',
-        title: 'Shiv Bhojanalaya',
-        category: 'Noth Indian',
-        rating: 3.6,
-        price: '$200'
+        restaurantId: 'rest1',
+        name: 'Margherita Pizza',
+        price: '135',
+        currency: 'Rupees',
+        rating: '4.1',
+        description: 'A classic cheesy Margherita. Cant go wrong. [Fat-14.3 per 100 g, Protein-12.6 per 100 g, Carbohydrate-39.2 per 100 g, Sugar-0 per 100 g, Calories-336 k.cal]Nutritional information per 100g',
+        isVeg: true
     },
     {
         id: 'item2',
-        image: 'cake.avif',
-        title: 'Cake',
-        category: 'Bakey, Desserts',
-        rating: 3.7,
-        price: '$100'
+        restaurantId: 'rest1',
+        name: 'Makhani Do Pyaza',
+        price: '155',
+        currency: 'Rupees',
+        rating: '4.1',
+        description: 'Makhani gravy, Onion & Cheese',
+        isVeg: true
     },
     {
         id: 'item3',
-        image: 'chips.avif',
-        title: 'Crispy Chips',
-        category: 'Pizza, Fast Food',
-        rating: 3.9,
-        price: '$100'
+        restaurantId: 'rest1',
+        name: 'My Mac',
+        price: '155',
+        currency: 'Rupees',
+        rating: '4',
+        description: 'A perfect blend of Cheesey Macroni, Swirl of Jalapenos Dip & Cheese',
+        isVeg: false
     },
     {
         id: 'item4',
-        image: 'paneer.avif',
-        title: 'Patiala Dhaba',
-        category: 'North Indian, Mughlai, Rolls',
-        rating: 4.1,
-        price: '$100'
+        restaurantId: 'rest1',
+        name: 'Onion Twist',
+        price: '155',
+        currency: 'Rupees',
+        rating: '4',
+        description: 'Twisted combination of Onion & Cheese',
+        isVeg: true
     },
-    {
-        id: 'item5',
-        image: 'parathe.avif',
-        title: 'Punjabi Chaap Bistro',
-        category: 'North Indian, Biryani, Rools',
-        rating: 3.7,
-        price: '$100'
-    },
-    {
-        id: 'item6',
-        image: 'pizza.avif',
-        title: 'Pizza',
-        category: 'Pizza, Fast Food',
-        rating: 4.7,
-        price: '$500'
-    }
 ]
+
+export const restaurants: Array<Restaurant> = [{
+    id: 'rest1',
+    name: 'La Pino\'z Pizza',
+    category: ['Pizza', 'Pasta', 'Italian', 'Fast Food'],
+    items: products,
+    rating: '4.2'
+},
+{
+    id: 'rest2',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest3',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest4',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest5',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest6',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest7',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+},
+{
+    id: 'rest8',
+    name: 'New Pizza King',
+    category: ['Pizza', 'Fast Food'],
+    items: products,
+    rating: '4.0'
+}]
+
+export const locations = ['Wembley', 'Harrow', 'Hendon', 'Mill Hill'];

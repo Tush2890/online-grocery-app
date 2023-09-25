@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 
-interface Props {
+type Props = {
     btnClassnames: string,
     btnDisabled?: boolean,
-    btnOnClick: () => void,
+    btnOnClick?: () => void,
     children: ReactNode
 }
 

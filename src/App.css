@@ -29,12 +29,30 @@ footer h5 {
   cursor: pointer;
 }
 
-.card {
-  -webkit-transition: all .5s;
-  -moz-transition: all .5s;
-  transition: all .5s;
+.noTopRightBorder {
+  border-top-right-radius: 0 !important;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.noBottomRightBorder {
+  border-bottom-right-radius: 0 !important;
+}
+
+.noTopLeftBorder {
+  border-top-left-radius: 0 !important;
+}
+
+.noBottomLeftBorder {
+  border-bottom-left-radius: 0 !important;
+}
+
+.cardWithoutBorder {
+  border: 0 !important;
+}
+
+.cardWithoutBorder:hover {
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color) !important;
+}
+
+.noBorder {
+  border: 0 !important;
 }
