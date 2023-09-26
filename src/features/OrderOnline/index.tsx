@@ -23,6 +23,10 @@ export const OrderOnline = () => {
             .then(response => {
                 setRestaurants(response.data)
                 setRestaurantList(response.data);
+            }).catch(error => {
+                setRestaurants([])
+                setRestaurantList([]);
+                console.error(`Error fetching the data - ${error}`)
             });
     }, []);
     const headerMenus = [{
