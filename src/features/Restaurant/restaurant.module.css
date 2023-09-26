@@ -2,7 +2,7 @@
     height: fit-content;
 }
 
-.w30{
+.w30 {
     width: 30%;
 }
 
@@ -13,4 +13,17 @@
     color: #fff;
     font-weight: bold;
     font-size: small;
+}
+
+.restaurantStatusActive {
+    filter: grayscale(0);
+}
+
+.restaurantStatusActive:hover,
+.restaurantStatusInactive:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.restaurantStatusInactive {
+    filter: grayscale(1);
 }

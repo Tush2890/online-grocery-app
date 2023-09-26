@@ -49,10 +49,6 @@ footer h5 {
   border: 0 !important;
 }
 
-.cardWithoutBorder:hover {
-  border: var(--bs-card-border-width) solid var(--bs-card-border-color) !important;
-}
-
 .noBorder {
   border: 0 !important;
 }

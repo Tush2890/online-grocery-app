@@ -2,13 +2,16 @@ import React from 'react';
 import style from './restaurant.module.css';
 
 type Props = {
-    id: string, category: string[], name: string, rating: string, onRestaurantClick: () => void
+    id: string, category: string[], name: string, rating: number, isOpen: boolean, onRestaurantClick: () => void
 }
 
-export const MyRestaurant = ({ id, category, name, rating, onRestaurantClick }: Props) => {
+export const MyRestaurant = ({ id, category, name, rating, isOpen, onRestaurantClick }: Props) => {
 
     return (
-        <div className="col-lg-4 col-md-6 col-sm-12 cursor-pointer" onClick={onRestaurantClick}>
+        <div
+            className={`col-lg-4 col-md-6 col-sm-12 cursor-pointer rounded 
+            ${isOpen ? style.restaurantStatusActive : style.restaurantStatusInactive}`}
+            onClick={onRestaurantClick}>
             <div className='card p-3 cardWithoutBorder'>
                 <img
                     className="card-img-top"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './home.module.css';
 import { Header } from '../Header';
 import { Card } from '../../components/Card';
@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from '../../components/Dropdown';
 import { Input } from '../../components/Input';
 import { locations } from '../../utils/data';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { setLocation } from '../../redux/app.slice';
 
 const assetsPath = process.env.PUBLIC_URL;
 const headerMenus = [{
@@ -17,6 +19,8 @@ const headerMenus = [{
 
 export const Home = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useAppSelector(state => state.appLevel.location);
     return (
         <>
             <div className={`${style.home}`}>
@@ -25,7 +29,12 @@ export const Home = () => {
                     <h1 className={`${style.h1}`}>BHUKKAD</h1>
                     <h2>Discover the best food & drinks</h2>
                     <div className='row justify-content-center mt-4'>
-                        <Dropdown classNames='form-control p-3 w-25 noTopRightBorder noBottomRightBorder' options={locations} />
+                        <Dropdown
+                            classNames='form-control p-3 w-25 noTopRightBorder noBottomRightBorder'
+                            options={locations}
+                            value={location}
+                            onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => dispatch(setLocation({ location: evt.target.value }))}
+                        />
                         <Input type='text'
                             classNames='form-control p-3 w-50 noTopLeftBorder noBottomLeftBorder'
                             placeholder='Search for restaurant, cusine or a dish' value='' />

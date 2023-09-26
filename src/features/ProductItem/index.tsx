@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import style from './productItem.module.css';
 import { CURRENCY } from '../../utils/constants';
 import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { productAdded, productRemoved } from '../../redux/cart.slice';
+import { productAdded } from '../../redux/cart.slice';
 import { CartItem } from '../CartItem';
 
 type Props = {
@@ -22,12 +21,12 @@ export const ProductItem = ({ prod }: Props) => {
         return productItemCount;
     }
 
-    const getRatingStars = (rating: string) => {
+    const getRatingStars = (rating: number) => {
         const stars = Array(5).fill(0);
         return (
             <div>
                 {stars.map((_, index) => {
-                    const className = index < parseInt(rating) ? "fa-solid" : "fa-regular";
+                    const className = index < rating ? "fa-solid" : "fa-regular";
                     return <i key={index} className={`${className} fa-star ${style.star}`}></i>;
                 })}
             </div>
@@ -44,16 +43,9 @@ export const ProductItem = ({ prod }: Props) => {
                 {getRatingStars(prod.rating)}
                 <p>{CURRENCY[prod.currency]}{prod.price}</p>
             </div>
-            {
-                productItemCount === 0 && <Button btnClassnames={`btn btn-outline-success px-5 ${style.h40}`}
-                    btnOnClick={() => {
-                        dispatch(productAdded({ id: prod.id }));
-
-                    }}>ADD</Button>
-            }
-            {
-                productItemCount > 0 && <CartItem productItemCount={productItemCount} productItemId={prod.id} />
-            }
+            {productItemCount === 0 && <Button btnClassnames={`btn btn-outline-success px-5 ${style.h40}`}
+                btnOnClick={() => dispatch(productAdded({ id: prod.id }))}>ADD</Button>}
+            {productItemCount > 0 && <CartItem productItemCount={productItemCount} productItemId={prod.id} />}
         </div>
     )
 }
