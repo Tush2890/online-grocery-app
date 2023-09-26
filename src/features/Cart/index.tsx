@@ -13,6 +13,7 @@ export const Cart = () => {
     const [signInForm, setSignInForm] = useState(false);
     const cartProducts = useAppSelector(state => state.cart.products);
     const currency = useAppSelector(state => state.appLevel.currency);
+    const productItems = useAppSelector(state => state.restaurant.items);
     return (
         <div className='row gap-4 container mt-4 mx-auto'>
             <div className='containerLeft col-lg-7 col-md-6 col-sm-12'>
@@ -66,19 +67,21 @@ export const Cart = () => {
             </div>
             <div className={`containerRight col-lg-4 col-md-5 col-12 ${style.customSection}`}>
                 <div className='d-flex gap-3'>
-                    <img src={`${process.env.PUBLIC_URL}/restaurants/${getRestaurant(cartProducts[0].id)?.id}.avif`} className='col-2' width={50} height={50} />
+                    <img
+                        src={`${process.env.PUBLIC_URL}/restaurants/${getRestaurant(productItems, cartProducts[0].id)?.id}.avif`}
+                        className='col-2' width={50} height={50} />
                     <div className='flex-column col-10'>
-                        <h5><b>{getRestaurant(cartProducts[0].id)?.name}</b></h5>
-                        <span>{getRestaurant(cartProducts[0].id)?.address.streetAddress}</span>
+                        <h5><b>{getRestaurant(productItems, cartProducts[0].id)?.name}</b></h5>
+                        <span>{getRestaurant(productItems, cartProducts[0].id)?.address.streetAddress}</span>
                     </div>
                 </div>
                 {
                     cartProducts.map(prod => (
                         prod.count > 0 && <div className={`d-flex mt-4`} key={prod.id}>
-                            <div className={`${style.productItemName}`}>{getProductName(prod.id)}</div>
+                            <div className={`${style.productItemName}`}>{getProductName(productItems, prod.id)}</div>
                             <CartItem productItemCount={prod.count} productItemId={prod.id} classNames='ms-3' />
                             <div className='ms-auto'>
-                                {`${currency}${getProductPrice(prod.id, prod.count)}`}
+                                {`${currency}${getProductPrice(productItems, prod.id, prod.count)}`}
                             </div>
                         </div>
                     ))
@@ -87,7 +90,7 @@ export const Cart = () => {
                     <h5>Bill Details</h5>
                     <div className={`d-flex ${style.noFlexWrap}`}>
                         <span>Item Total</span>
-                        <span className='ms-auto'>{`${currency}${getTotalPrice(cartProducts)}`}</span>
+                        <span className='ms-auto'>{`${currency}${getTotalPrice(productItems, cartProducts)}`}</span>
                     </div>
                     <div className={`d-flex ${style.noFlexWrap}`}>
                         <span>Delivery Fee | 3.0 kms</span>
@@ -105,7 +108,7 @@ export const Cart = () => {
                     <hr />
                     <div className={`d-flex ${style.noFlexWrap}`}>
                         <span>TO PAY</span>
-                        <span className='ms-auto'>{`${currency}${getAmountToPay(cartProducts)}`}</span>
+                        <span className='ms-auto'>{`${currency}${getAmountToPay(productItems, cartProducts)}`}</span>
                     </div>
                 </div>
             </div>

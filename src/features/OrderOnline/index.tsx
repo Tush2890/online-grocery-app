@@ -1,5 +1,4 @@
-import React from 'react';
-import { locations, restaurants } from '../../utils/data';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../Header';
 import style from './orderOnline.module.css';
 import { Dropdown } from '../../components/Dropdown';
@@ -9,12 +8,25 @@ import { MyRestaurant } from '../Restaurant';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setLocation } from '../../redux/app.slice';
 import { setRestaurant } from '../../redux/restaurant.slice';
+import axios from 'axios';
+import { Restaurant } from '../../utils/models';
+import { setRestaurantList } from '../../utils/service';
 
 export const OrderOnline = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
+    const locations = useAppSelector(state => state.appLevel.locations);
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    useEffect(() => {
+        axios.get<Restaurant[]>(`http://localhost:4000/getRestaurants/${location}`)
+            .then(response => {
+                setRestaurants(response.data)
+                setRestaurantList(response.data);
+            });
+    }, []);
     const headerMenus = [{
+        id: 'menu1',
         element: <Dropdown
             classNames='form-control p-3 noTopRightBorder noBottomRightBorder'
             options={locations}
@@ -23,14 +35,18 @@ export const OrderOnline = () => {
         />,
         parentClassNames: 'w-25'
     }, {
+        id: 'menu2',
         element: <Input type='text'
             classNames='form-control p-3 noTopLeftBorder noBottomLeftBorder'
-            placeholder='Search for restaurant, cusine or a dish' value='' />,
+            placeholder='Search for restaurant, cusine or a dish' value=''
+            onchange={() => console.log('search field changes')} />,
         parentClassNames: 'w-50'
     }, {
+        id: 'menu3',
         element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Log in</Link>,
         parentClassNames: 'ms-auto'
     }, {
+        id: 'menu4',
         element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Sign up</Link>
     }];
 

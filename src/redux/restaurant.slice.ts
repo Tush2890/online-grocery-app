@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Restaurant } from "../utils/data";
+import { Restaurant } from "../utils/models";
 
 const initialState: Restaurant = {
     address: { city: '', country: '', postcode: '', state: '', streetAddress: '' },

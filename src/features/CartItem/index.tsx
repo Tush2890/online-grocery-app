@@ -19,7 +19,8 @@ export const CartItem = ({ productItemId, productItemCount, classNames }: Props)
                 btnOnClick={() => dispatch(productRemoved({ id: productItemId }))}
             ><i className='fa-solid fa-minus'></i>
             </Button>
-            <Input type='text' classNames={`noBorder px-3 ${style.w3Rem} ${style.inputTxtColor}`} value={productItemCount} />
+            <Input type='text' classNames={`noBorder px-3 ${style.w3Rem} ${style.inputTxtColor}`}
+                value={productItemCount} onchange={() => console.log('Item value changed')} />
             <Button btnClassnames={`btn btn-outline-success noBorder ${style.noBgOnHover}`}
                 btnOnClick={() => {
                     dispatch(productAdded({ id: productItemId }));

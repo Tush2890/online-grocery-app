@@ -5,15 +5,17 @@ import { Card } from '../../components/Card';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from '../../components/Dropdown';
 import { Input } from '../../components/Input';
-import { locations } from '../../utils/data';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { setLocation } from '../../redux/app.slice';
+import { setLocation, setLocations } from '../../redux/app.slice';
+import axios from 'axios';
 
 const assetsPath = process.env.PUBLIC_URL;
 const headerMenus = [{
+    id: 'menu1',
     element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Log in</Link>,
     parentClassNames: 'ms-auto'
 }, {
+    id: 'menu2',
     element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Sign up</Link>
 }];
 
@@ -21,6 +23,11 @@ export const Home = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
+    const locations = useAppSelector(state => state.appLevel.locations);
+    useEffect(() => {
+        axios.get<Array<{ id: string, name: string }>>(`http://localhost:4000/getLocations`)
+            .then((response) => dispatch(setLocations({ locations: response.data })));
+    }, [dispatch]);
     return (
         <>
             <div className={`${style.home}`}>
@@ -37,7 +44,8 @@ export const Home = () => {
                         />
                         <Input type='text'
                             classNames='form-control p-3 w-50 noTopLeftBorder noBottomLeftBorder'
-                            placeholder='Search for restaurant, cusine or a dish' value='' />
+                            placeholder='Search for restaurant, cusine or a dish' value=''
+                            onchange={() => console.log('search field changed')} />
                     </div>
                 </div>
             </div>
