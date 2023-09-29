@@ -2,6 +2,10 @@
 
 https://github.com/Tush2890/online-grocery-app-client/assets/39027684/ced994cb-078e-4a14-bda3-49d275f15bde
 
+# To use this project
+
+This project is using node-js server for it's services. 
+To use this project completely, you need to clone the `online-grocery-app-server` repo. Please refer the `Readme.md` file of this repo to start the node-js server.
 
 # Getting Started with Create React App
 
