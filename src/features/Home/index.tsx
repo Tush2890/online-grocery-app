@@ -25,7 +25,7 @@ export const Home = () => {
     const location = useAppSelector(state => state.appLevel.location);
     const locations = useAppSelector(state => state.appLevel.locations);
     useEffect(() => {
-        axios.get<Array<{ id: string, name: string }>>(`http://localhost:4000/getLocations`)
+        axios.get<Array<{ id: string, name: string }>>(`http://localhost:4000/locations`)
             .then((response) => dispatch(setLocations({ locations: response.data })))
             .catch(error => {
                 console.error(`Error fetching the locations - ${error}`)

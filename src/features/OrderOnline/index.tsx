@@ -19,7 +19,7 @@ export const OrderOnline = () => {
     const locations = useAppSelector(state => state.appLevel.locations);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     useEffect(() => {
-        axios.get<Restaurant[]>(`http://localhost:4000/getRestaurants/${location}`)
+        axios.get<Restaurant[]>(`http://localhost:4000/restaurants/${location}`)
             .then(response => {
                 setRestaurants(response.data)
                 setRestaurantList(response.data);
@@ -28,7 +28,7 @@ export const OrderOnline = () => {
                 setRestaurantList([]);
                 console.error(`Error fetching the data - ${error}`)
             });
-    }, []);
+    }, [location]);
     const headerMenus = [{
         id: 'menu1',
         element: <Dropdown

@@ -35,7 +35,7 @@ export const ProductItem = ({ prod }: Props) => {
     const productItemCount = getItemCount();
     return (
         <div className='d-flex gap-2'>
-            <img
+            <img alt='preferenceImage'
                 src={`${process.env.PUBLIC_URL}/${prod.isVeg ? 'veg' : 'non-veg'}.png`}
                 width={20} height={20} />
             <div className='flex-column'>

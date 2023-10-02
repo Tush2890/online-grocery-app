@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from './cart.module.css';
 import { Button } from '../../components/Button';
 import { useAppSelector } from '../../redux/store';
@@ -60,7 +60,7 @@ export const Cart = () => {
                         </div>}
                     </div>
                     <div className='col-md-4 col-lg-2'>
-                        <img src={`${process.env.PUBLIC_URL}/wrap.webp`} className='mt-5' height={100} width={100} />
+                        <img src={`${process.env.PUBLIC_URL}/wrap.webp`} className='mt-5' height={100} width={100} alt='signInImage' />
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@ export const Cart = () => {
                 <div className='d-flex gap-3'>
                     <img
                         src={`${process.env.PUBLIC_URL}/restaurants/${getRestaurant(productItems, cartProducts[0].id)?.id}.avif`}
-                        className='col-2' width={50} height={50} />
+                        className='col-2' width={50} height={50} alt='restaurantImage' />
                     <div className='flex-column col-10'>
                         <h5><b>{getRestaurant(productItems, cartProducts[0].id)?.name}</b></h5>
                         <span>{getRestaurant(productItems, cartProducts[0].id)?.address.streetAddress}</span>

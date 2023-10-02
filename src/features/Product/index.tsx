@@ -15,7 +15,7 @@ export const MyProduct = () => {
     return (
         <div className='container'>
             <div className='row text-start'>
-                <img src={`${process.env.PUBLIC_URL}/restaurants/${restaurtant.id}.avif`} width={450} height={450} />
+                <img src={`${process.env.PUBLIC_URL}/restaurants/${restaurtant.id}.avif`} width={450} height={450} alt='restaurantImage' />
                 <h1 className='mt-2'><b>{restaurtant.name}</b></h1>
                 <p>{restaurtant.category.join(', ')}</p>
                 <p>{restaurtant.address.streetAddress}</p>
@@ -37,7 +37,7 @@ export const MyProduct = () => {
                 <Toast className={totalItemsCount > 0 ? 'show' : 'hide'}>
                     {totalItemsCount} item(s) added in your cart
                     <div className='ms-auto cursor-pointer' onClick={() => navigate('checkout')}>
-                        <img src={`${process.env.PUBLIC_URL}/shopping-cart.svg`} width={30} height={30} />
+                        <img src={`${process.env.PUBLIC_URL}/shopping-cart.svg`} width={30} height={30} alt='cartImage' />
                         <span className={`${style.badge}`}>{totalItemsCount}</span>
                     </div>
                 </Toast>
