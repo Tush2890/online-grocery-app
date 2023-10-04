@@ -8,6 +8,9 @@ import { Input } from '../../components/Input';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setLocation, setLocations } from '../../redux/app.slice';
 import axios from 'axios';
+import { setSearchParam } from '../../redux/restaurant.slice';
+import { TIMEOUT_IN_MILLISECS } from '../../utils/constants';
+import { useDebouncedCallback } from 'use-debounce';
 
 const assetsPath = process.env.PUBLIC_URL;
 const headerMenus = [{
@@ -24,13 +27,23 @@ export const Home = () => {
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
     const locations = useAppSelector(state => state.appLevel.locations);
+
     useEffect(() => {
-        axios.get<Array<{ id: string, name: string }>>(`http://localhost:4000/locations`)
+        axios.get<Array<{ id: string, name: string }>>(`${process.env.REACT_APP_BASE_URL}/locations`)
             .then((response) => dispatch(setLocations({ locations: response.data })))
             .catch(error => {
                 console.error(`Error fetching the locations - ${error}`)
             });;
     }, [dispatch]);
+
+    const debounced = useDebouncedCallback(
+        (value) => {
+            dispatch(setSearchParam({ searchParam: value }));
+            navigate('order-food-online');
+        },
+        TIMEOUT_IN_MILLISECS
+    );
+
     return (
         <>
             <div className={`${style.home}`}>
@@ -43,12 +56,14 @@ export const Home = () => {
                             classNames='form-control p-3 w-25 noTopRightBorder noBottomRightBorder'
                             options={locations}
                             value={location}
-                            onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => dispatch(setLocation({ location: evt.target.value }))}
+                            onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => dispatch(setLocation({
+                                location: evt.target.value
+                            }))}
                         />
                         <Input type='text'
                             classNames='form-control p-3 w-50 noTopLeftBorder noBottomLeftBorder'
-                            placeholder='Search for restaurant, cusine or a dish' value=''
-                            onchange={() => console.log('search field changed')} />
+                            placeholder='Search for restaurant, cusine or a dish'
+                            onKeyUp={(evt) => debounced(evt.target.value)} />
                     </div>
                 </div>
             </div>

@@ -7,10 +7,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MyRestaurant } from '../Restaurant';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setLocation } from '../../redux/app.slice';
-import { setRestaurant } from '../../redux/restaurant.slice';
+import { setRestaurant, setSearchParam } from '../../redux/restaurant.slice';
 import axios from 'axios';
 import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
+import { TIMEOUT_IN_MILLISECS } from '../../utils/constants';
+import { useDebouncedCallback } from 'use-debounce';
 
 export const OrderOnline = () => {
     const navigate = useNavigate();
@@ -18,8 +20,11 @@ export const OrderOnline = () => {
     const location = useAppSelector(state => state.appLevel.location);
     const locations = useAppSelector(state => state.appLevel.locations);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const searchString = useAppSelector(state => state.restaurant.searchParam);
+
     useEffect(() => {
-        axios.get<Restaurant[]>(`http://localhost:4000/restaurants/${location}`)
+        axios.get<Restaurant[]>(`${process.env.REACT_APP_BASE_URL}/restaurants/${location}
+        ?searchString=${searchString}`)
             .then(response => {
                 setRestaurants(response.data)
                 setRestaurantList(response.data);
@@ -28,22 +33,32 @@ export const OrderOnline = () => {
                 setRestaurantList([]);
                 console.error(`Error fetching the data - ${error}`)
             });
-    }, [location]);
+    }, [location, searchString]);
+
+    const debounced = useDebouncedCallback(
+        (value) => {
+            dispatch(setSearchParam({ searchParam: value }));
+        },
+        TIMEOUT_IN_MILLISECS
+    );
+
     const headerMenus = [{
         id: 'menu1',
         element: <Dropdown
             classNames='form-control p-3 noTopRightBorder noBottomRightBorder'
             options={locations}
             value={location}
-            onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => dispatch(setLocation({ location: evt.target.value }))}
+            onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => dispatch(setLocation({
+                location: evt.target.value
+            }))}
         />,
         parentClassNames: 'w-25'
     }, {
         id: 'menu2',
         element: <Input type='text'
             classNames='form-control p-3 noTopLeftBorder noBottomLeftBorder'
-            placeholder='Search for restaurant, cusine or a dish' value=''
-            onchange={() => console.log('search field changes')} />,
+            placeholder='Search for restaurant, cusine or a dish'
+            onKeyUp={(evt) => debounced(evt.target.value)} />,
         parentClassNames: 'w-50'
     }, {
         id: 'menu3',
