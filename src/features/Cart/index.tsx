@@ -13,7 +13,7 @@ export const Cart = () => {
     const [signInForm, setSignInForm] = useState(false);
     const cartProducts = useAppSelector(state => state.cart.products);
     const currency = useAppSelector(state => state.appLevel.currency);
-    const productItems = useAppSelector(state => state.restaurant.items);
+    const productItems = useAppSelector(state => state.restaurant.restaurant.items);
     return (
         <div className='row gap-4 container mt-4 mx-auto'>
             <div className='containerLeft col-lg-7 col-md-6 col-sm-12'>

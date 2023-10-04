@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const MyProduct = () => {
     const navigate = useNavigate();
-    const restaurtant = useAppSelector(state => state.restaurant);
+    const restaurtant = useAppSelector(state => state.restaurant.restaurant);
     const cartProducts = useAppSelector(state => state.cart.products);
     let totalItemsCount = 0;
     cartProducts.forEach(item => totalItemsCount += item.count);
