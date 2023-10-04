@@ -4,10 +4,12 @@ interface Props {
     type: string;
     classNames: string;
     placeholder?: string;
-    value: string | number | undefined;
-    onchange: () => void
+    value?: string | number | undefined;
+    onchange?: (evt: any) => void
+    onKeyUp?: (evt: any) => void
 }
 
-export const Input = ({ type, classNames, placeholder, value, onchange }: Props) => (
-    <input type={type} className={classNames} placeholder={placeholder} value={value} onChange={onchange}/>
+export const Input = ({ type, classNames, placeholder, value, onchange, onKeyUp }: Props) => (
+    <input type={type} className={classNames} placeholder={placeholder}
+        value={value} onChange={onchange} onKeyUp={onKeyUp} />
 )
