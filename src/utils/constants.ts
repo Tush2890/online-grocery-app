@@ -6,3 +6,4 @@ export const CURRENCY: { [key: string]: string } = {
     'UK': '£',
     'Default': '$'
 }
+export const TIMEOUT_IN_MILLISECS = 500;
