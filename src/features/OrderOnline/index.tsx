@@ -23,8 +23,7 @@ export const OrderOnline = () => {
     const searchString = useAppSelector(state => state.restaurant.searchParam);
 
     useEffect(() => {
-        axios.get<Restaurant[]>(`${process.env.REACT_APP_BASE_URL}/restaurants/${location}
-        ?searchString=${searchString}`)
+        axios.get<Restaurant[]>(`${process.env.REACT_APP_BASE_URL}/restaurants/${location}?searchString=${searchString}`)
             .then(response => {
                 setRestaurants(response.data)
                 setRestaurantList(response.data);
