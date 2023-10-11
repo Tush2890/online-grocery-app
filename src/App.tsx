@@ -6,6 +6,7 @@ import { Home } from './features/Home';
 import { OrderOnline } from './features/OrderOnline';
 import { Cart } from './features/Cart';
 import { MyProduct } from './features/Product';
+import Login from './features/Login';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/order-food-online' element={<OrderOnline />} />
           <Route path='/order-food-online/food-menus' element={<MyProduct />} />
           <Route path='/order-food-online/food-menus/checkout' element={<Cart />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </div>
       <Footer />

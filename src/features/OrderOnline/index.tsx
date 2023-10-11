@@ -54,14 +54,14 @@ export const OrderOnline = () => {
         parentClassNames: 'w-25'
     }, {
         id: 'menu2',
-        element: <Input type='text'
+        element: <Input id='searchInput' type='text'
             classNames='form-control p-3 noTopLeftBorder noBottomLeftBorder'
             placeholder='Search for restaurant, cusine or a dish'
-            onKeyUp={(evt) => debounced(evt.target.value)} />,
+            onKeyUp={(evt: React.ChangeEvent<HTMLInputElement>) => debounced(evt.target.value)} />,
         parentClassNames: 'w-50'
     }, {
         id: 'menu3',
-        element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Log in</Link>,
+        element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
         parentClassNames: 'ms-auto'
     }, {
         id: 'menu4',

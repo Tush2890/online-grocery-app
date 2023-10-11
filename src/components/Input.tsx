@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface Props {
+    id: string;
     type: string;
     classNames: string;
     placeholder?: string;
@@ -9,7 +10,7 @@ interface Props {
     onKeyUp?: (evt: any) => void
 }
 
-export const Input = ({ type, classNames, placeholder, value, onchange, onKeyUp }: Props) => (
-    <input type={type} className={classNames} placeholder={placeholder}
+export const Input = ({ id, type, classNames, placeholder, value, onchange, onKeyUp }: Props) => (
+    <input id={id} type={type} className={classNames} placeholder={placeholder}
         value={value} onChange={onchange} onKeyUp={onKeyUp} />
 )

@@ -15,7 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 const assetsPath = process.env.PUBLIC_URL;
 const headerMenus = [{
     id: 'menu1',
-    element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Log in</Link>,
+    element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
     parentClassNames: 'ms-auto'
 }, {
     id: 'menu2',
@@ -60,10 +60,10 @@ export const Home = () => {
                                 location: evt.target.value
                             }))}
                         />
-                        <Input type='text'
+                        <Input id='searchInput' type='text'
                             classNames='form-control p-3 w-50 noTopLeftBorder noBottomLeftBorder'
                             placeholder='Search for restaurant, cusine or a dish'
-                            onKeyUp={(evt) => debounced(evt.target.value)} />
+                            onKeyUp={(evt: React.ChangeEvent<HTMLInputElement>) => debounced(evt.target.value)} />
                     </div>
                 </div>
             </div>
