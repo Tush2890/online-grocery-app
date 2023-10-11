@@ -7,12 +7,12 @@ https://github.com/Tush2890/online-grocery-app-client/assets/39027684/ced994cb-0
 This project is using node-js server for it's services. 
 To use this project completely, you need to clone the [online-grocery-app-server](https://github.com/Tush2890/online-grocery-app-server/tree/main) repo. Please refer the `Readme.md` file of this repo to start the node-js server.
 
-You also need to add an .env file at the root of your project that should have following contents:-
+You also need to add an `.env` file at the root of your project that should have following contents:-
 
-HTTPS=true
-REACT_APP_BASE_URL = http://localhost:4000
-REACT_APP_GOOGLE_API = https://www.googleapis.com/
-REACT_APP_GG_APP_ID=YOUR_PROJECT_CLIENT_ID
+- HTTPS=true
+- REACT_APP_BASE_URL = http://localhost:4000
+- REACT_APP_GOOGLE_API = https://www.googleapis.com/
+- REACT_APP_GG_APP_ID=YOUR_PROJECT_CLIENT_ID
 
 # Getting Started with Create React App
 
