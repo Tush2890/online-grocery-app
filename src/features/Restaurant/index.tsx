@@ -1,8 +1,12 @@
-import React from 'react';
 import style from './restaurant.module.css';
 
 type Props = {
-    id: string, category: string[], name: string, rating: number, isOpen: boolean, onRestaurantClick: () => void
+    id: string,
+    category: string[],
+    name: string,
+    rating: number,
+    isOpen: boolean,
+    onRestaurantClick: () => void
 }
 
 export const MyRestaurant = ({ id, category, name, rating, isOpen, onRestaurantClick }: Props) => {

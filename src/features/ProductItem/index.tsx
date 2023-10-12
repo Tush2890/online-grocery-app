@@ -1,4 +1,3 @@
-import React from 'react';
 import { Product } from '../../utils/models';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import style from './productItem.module.css';

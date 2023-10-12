@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../../components/Button';
 import { ProductItem } from '../ProductItem';
 import { Toast } from '../../components/Toast';
@@ -6,7 +5,7 @@ import { useAppSelector } from '../../redux/store';
 import style from './product.module.css';
 import { useNavigate } from 'react-router-dom';
 
-export const MyProduct = () => {
+const MyProduct = () => {
     const navigate = useNavigate();
     const restaurtant = useAppSelector(state => state.restaurant.restaurant);
     const cartProducts = useAppSelector(state => state.cart.products);
@@ -45,3 +44,5 @@ export const MyProduct = () => {
         </div>
     )
 }
+
+export default MyProduct;

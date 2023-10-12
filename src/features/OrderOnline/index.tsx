@@ -14,7 +14,7 @@ import { setRestaurantList } from '../../utils/service';
 import { TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
 
-export const OrderOnline = () => {
+const OrderOnline = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
@@ -94,3 +94,5 @@ export const OrderOnline = () => {
         </div>
     )
 }
+
+export default OrderOnline;

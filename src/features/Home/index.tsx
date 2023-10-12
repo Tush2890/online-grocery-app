@@ -22,7 +22,7 @@ const headerMenus = [{
     element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Sign up</Link>
 }];
 
-export const Home = () => {
+const Home = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
@@ -90,3 +90,5 @@ export const Home = () => {
         </>
     )
 }
+
+export default Home;

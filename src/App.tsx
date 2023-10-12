@@ -1,12 +1,12 @@
-import React from 'react';
 import './App.css';
 import { Footer } from './features/Footer';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from './features/Home';
-import { OrderOnline } from './features/OrderOnline';
-import { Cart } from './features/Cart';
-import { MyProduct } from './features/Product';
+import Home from './features/Home';
+import OrderOnline from './features/OrderOnline';
+import Cart from './features/Cart';
+import MyProduct from './features/Product';
 import Login from './features/Login';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <Route path='/order-food-online/food-menus' element={<MyProduct />} />
           <Route path='/order-food-online/food-menus/checkout' element={<Cart />} />
           <Route path='/login' element={<Login />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
       <Footer />

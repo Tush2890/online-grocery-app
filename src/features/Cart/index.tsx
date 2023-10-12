@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import style from './cart.module.css';
 import { Button } from '../../components/Button';
 import { useAppSelector } from '../../redux/store';
@@ -8,7 +8,7 @@ import {
     getProductPrice, getRestaurant, getTotalPrice
 } from './cart.utils';
 
-export const Cart = () => {
+const Cart = () => {
     const [loginForm, setLoginForm] = useState(false);
     const [signInForm, setSignInForm] = useState(false);
     const cartProducts = useAppSelector(state => state.cart.products);
@@ -115,3 +115,5 @@ export const Cart = () => {
         </div>
     )
 }
+
+export default Cart;
