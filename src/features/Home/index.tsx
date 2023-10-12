@@ -17,9 +17,6 @@ const headerMenus = [{
     id: 'menu1',
     element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
     parentClassNames: 'ms-auto'
-}, {
-    id: 'menu2',
-    element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Sign up</Link>
 }];
 
 const Home = () => {

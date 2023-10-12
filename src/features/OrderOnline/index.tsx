@@ -63,9 +63,6 @@ const OrderOnline = () => {
         id: 'menu3',
         element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
         parentClassNames: 'ms-auto'
-    }, {
-        id: 'menu4',
-        element: <Link className={`nav-link ${style.navLinkStyle}`} to={'#'}>Sign up</Link>
     }];
 
     const onRestaurantClick = (restaurantId: string) => {

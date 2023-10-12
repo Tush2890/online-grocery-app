@@ -4,6 +4,7 @@ import { Input } from "../../components/Input";
 import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import MyGoogleLogin from "../../components/GoogleLogin";
+import { useNavigate } from "react-router-dom";
 
 interface User {
     email: string;
@@ -12,11 +13,14 @@ interface User {
 }
 
 const Login = () => {
-
+    const navigate = useNavigate();
     const [appUser, setAppUser] = useState<User>({ email: '', password: '', rememberMe: false });
     const authenticateUser = () => {
         axios.post<User>(`${process.env.REACT_APP_BASE_URL}/user/authenticate`, appUser)
-            .then(response => console.log(response.data));
+            .then(response => {
+                console.log(response.data);
+                navigate(-1);
+            }).catch((err) => console.error(err));
     }
 
     return (
@@ -24,7 +28,13 @@ const Login = () => {
         <div className={`${styles.authWrapper} text-start`}>
             <div className={`${styles.authInner} mt-5`}>
                 <form>
-                    <h3>Log In</h3>
+                    <div className="d-flex">
+                        <img src={`${process.env.PUBLIC_URL}/app-logo.png`} alt="app-logo"
+                            width={150} height={150} className="m-auto" />
+                    </div>
+                    <p className={`${styles.forgotPassword} text-end`}>
+                        <a href="#">New User?</a>
+                    </p>
                     <p className={`${styles.forgotPassword} text-end`}>
                         Forgot <a href="#">password?</a>
                     </p>
