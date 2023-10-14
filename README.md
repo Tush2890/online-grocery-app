@@ -10,7 +10,7 @@ To use this project completely, you need to clone the [online-grocery-app-server
 You also need to add an `.env` file at the root of your project that should have following contents:-
 
 - HTTPS=true
-- REACT_APP_BASE_URL = http://localhost:4000
+- REACT_APP_API_URL = http://localhost:4000
 - REACT_APP_GOOGLE_API = https://www.googleapis.com/
 - REACT_APP_GG_APP_ID=YOUR_PROJECT_CLIENT_ID
 

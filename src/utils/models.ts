@@ -24,5 +24,5 @@ export interface Restaurant {
     category: string[];
     rating: number;
     address: Address;
-    isOpen: boolean
+    isOpen: boolean;
 }
