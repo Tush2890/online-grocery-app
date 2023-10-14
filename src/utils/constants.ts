@@ -7,3 +7,5 @@ export const CURRENCY: { [key: string]: string } = {
     'Default': '$'
 }
 export const TIMEOUT_IN_MILLISECS = 500;
+export const LOCATION_API_URL = `${process.env.REACT_APP_API_URL}/locations`;
+export const RESTAURANT_API_URL = `${process.env.REACT_APP_API_URL}/restaurants`;

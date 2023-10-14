@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Header } from '../Header';
 import style from './orderOnline.module.css';
 import { Dropdown } from '../../components/Dropdown';
@@ -11,7 +11,7 @@ import { setRestaurant, setSearchParam } from '../../redux/restaurant.slice';
 import axios from 'axios';
 import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
-import { TIMEOUT_IN_MILLISECS } from '../../utils/constants';
+import { RESTAURANT_API_URL, TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
 
 const OrderOnline = () => {
@@ -21,26 +21,42 @@ const OrderOnline = () => {
     const locations = useAppSelector(state => state.appLevel.locations);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const searchString = useAppSelector(state => state.restaurant.searchParam);
+    const startPage = useRef(0);
 
     useEffect(() => {
-        axios.get<Restaurant[]>(`${process.env.REACT_APP_BASE_URL}/restaurants/${location}?searchString=${searchString}`)
-            .then(response => {
-                setRestaurants(response.data)
-                setRestaurantList(response.data);
-            }).catch(error => {
-                setRestaurants([])
-                setRestaurantList([]);
-                console.error(`Error fetching the data - ${error}`)
-            });
-    }, [location, searchString]);
+        fetchRestaurants();
+    }, [location, searchString, startPage.current]);
 
+    useEffect(() => {
+        window.addEventListener('scroll', onUserScroll);
+        return () => window.removeEventListener('scroll', onUserScroll);
+    }, []);
+
+    const fetchRestaurants = async () => {
+        try {
+            const response = await axios
+                .get<{ data: Restaurant[] }>(`${RESTAURANT_API_URL}/${location}?searchString=${searchString}&startPage=${startPage.current}`);
+            setRestaurants([...restaurants, ...response.data.data]);
+            setRestaurantList([...restaurants, ...response.data.data]);
+        }
+        catch (err) {
+            setRestaurants([])
+            setRestaurantList([]);
+            console.error(`Error fetching the restaurants - ${err}`);
+        }
+    }
+    const onUserScroll = () => {
+        if (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 700) {
+            console.log(`curr page ${startPage.current}`);
+            startPage.current++;
+        }
+    }
     const debounced = useDebouncedCallback(
         (value) => {
             dispatch(setSearchParam({ searchParam: value }));
         },
         TIMEOUT_IN_MILLISECS
     );
-
     const headerMenus = [{
         id: 'menu1',
         element: <Dropdown
@@ -64,7 +80,6 @@ const OrderOnline = () => {
         element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
         parentClassNames: 'ms-auto'
     }];
-
     const onRestaurantClick = (restaurantId: string) => {
         const selectedRestaurant = restaurants.find(rest => rest.id === restaurantId);
         if (selectedRestaurant) {
@@ -72,7 +87,6 @@ const OrderOnline = () => {
         }
         navigate('food-menus');
     }
-
     return (
         <div className={`container`}>
             <div className='mt-1'>

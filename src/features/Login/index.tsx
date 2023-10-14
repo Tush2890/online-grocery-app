@@ -16,7 +16,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [appUser, setAppUser] = useState<User>({ email: '', password: '', rememberMe: false });
     const authenticateUser = () => {
-        axios.post<User>(`${process.env.REACT_APP_BASE_URL}/user/authenticate`, appUser)
+        axios.post<User>(`${process.env.REACT_APP_API_URL}/user/authenticate`, appUser)
             .then(response => {
                 console.log(response.data);
                 navigate(-1);
