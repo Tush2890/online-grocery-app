@@ -21,39 +21,52 @@ const OrderOnline = () => {
     const locations = useAppSelector(state => state.appLevel.locations);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const searchString = useAppSelector(state => state.restaurant.searchParam);
-    const startPage = useRef(0);
+    const [page, setPage] = useState<number>(0);
+
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
+        const firstEntry = entries[0];
+        if (firstEntry.isIntersecting) {
+            setPage((prevPage) => prevPage + 1);
+        }
+    }
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(handleObserver);
+        const footer = document.querySelector('footer');
+        if (footer) {
+            observer.observe(footer);
+        }
+        // Clean up the observer when the component unmounts.
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
 
     useEffect(() => {
         fetchRestaurants();
-    }, [location, searchString, startPage.current]);
-
-    useEffect(() => {
-        window.addEventListener('scroll', onUserScroll);
-        return () => window.removeEventListener('scroll', onUserScroll);
-    }, []);
+    }, [page, searchString])
 
     const fetchRestaurants = async () => {
         try {
             const response = await axios
-                .get<{ data: Restaurant[] }>(`${RESTAURANT_API_URL}/${location}?searchString=${searchString}&startPage=${startPage.current}`);
-            setRestaurants([...restaurants, ...response.data.data]);
-            setRestaurantList([...restaurants, ...response.data.data]);
+                .get<{ data: Restaurant[] }>(`${RESTAURANT_API_URL}/${location}?searchString=${searchString}&startPage=${page}`);
+            if (response.data.data.length > 0) {
+                setRestaurants([...restaurants, ...response.data.data]);
+                setRestaurantList([...restaurants, ...response.data.data]);
+            }
         }
         catch (err) {
-            setRestaurants([])
+            setRestaurants([]);
             setRestaurantList([]);
             console.error(`Error fetching the restaurants - ${err}`);
         }
     }
-    const onUserScroll = () => {
-        if (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 700) {
-            console.log(`curr page ${startPage.current}`);
-            startPage.current++;
-        }
-    }
+
     const debounced = useDebouncedCallback(
         (value) => {
             dispatch(setSearchParam({ searchParam: value }));
+            setRestaurants([]);
+            setPage(0);
         },
         TIMEOUT_IN_MILLISECS
     );
