@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import style from './home.module.css';
 import { Header } from '../Header';
 import { Card } from '../../components/Card';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Dropdown } from '../../components/Dropdown';
 import { Input } from '../../components/Input';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
@@ -11,15 +11,12 @@ import axios from 'axios';
 import { setSearchParam } from '../../redux/restaurant.slice';
 import { LOCATION_API_URL, TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const assetsPath = process.env.PUBLIC_URL;
-const headerMenus = [{
-    id: 'menu1',
-    element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
-    parentClassNames: 'ms-auto'
-}];
 
 const Home = () => {
+    const { loginWithRedirect } = useAuth0();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
@@ -27,6 +24,11 @@ const Home = () => {
     useEffect(() => {
         fetchLocation();
     }, []);
+    const headerMenus = [{
+        id: 'menu1',
+        element: <a className={`nav-link cursor-pointer ${style.navLinkStyle}`} onClick={() => loginWithRedirect()}>Log in</a>,
+        parentClassNames: 'ms-auto'
+    }];
     const fetchLocation = async () => {
         try {
             const response = await axios.get<Array<{ id: string, name: string }>>(LOCATION_API_URL);

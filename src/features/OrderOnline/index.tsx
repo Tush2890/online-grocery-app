@@ -3,7 +3,7 @@ import { Header } from '../Header';
 import style from './orderOnline.module.css';
 import { Dropdown } from '../../components/Dropdown';
 import { Input } from '../../components/Input';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MyRestaurant } from '../Restaurant';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setLocation } from '../../redux/app.slice';
@@ -13,6 +13,7 @@ import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
 import { RESTAURANT_API_URL, TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const OrderOnline = () => {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const OrderOnline = () => {
     useEffect(() => {
         fetchRestaurants();
     }, [page, searchString])
-
+    const { loginWithRedirect } = useAuth0();
     const fetchRestaurants = async () => {
         try {
             const response = await axios
@@ -90,7 +91,7 @@ const OrderOnline = () => {
         parentClassNames: 'w-50'
     }, {
         id: 'menu3',
-        element: <Link className={`nav-link ${style.navLinkStyle}`} to={'/login'}>Log in</Link>,
+        element: <a className={`nav-link cursor-pointer ${style.navLinkStyle}`} onClick={() => loginWithRedirect()}>Log in</a>,
         parentClassNames: 'ms-auto'
     }];
     const onRestaurantClick = (restaurantId: string) => {
