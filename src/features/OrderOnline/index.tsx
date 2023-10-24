@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Header } from '../Header';
 import style from './orderOnline.module.css';
 import { Dropdown } from '../../components/Dropdown';
@@ -46,13 +46,13 @@ const OrderOnline = () => {
     useEffect(() => {
         fetchRestaurants();
     }, [page, searchString])
-    const { loginWithRedirect } = useAuth0();
-    const fetchRestaurants = async () => {
+
+    const fetchRestaurants = useCallback(async () => {
         try {
             const response = await axios
                 .get<{ data: Restaurant[] }>(`${RESTAURANT_API_URL}/${location}?searchString=${searchString}&startPage=${page}`);
             if (response.data.data.length > 0) {
-                setRestaurants([...restaurants, ...response.data.data]);
+                setRestaurants(prevListOfRestaurants => [...prevListOfRestaurants, ...response.data.data]);
                 setRestaurantList([...restaurants, ...response.data.data]);
             }
         }
@@ -61,7 +61,7 @@ const OrderOnline = () => {
             setRestaurantList([]);
             console.error(`Error fetching the restaurants - ${err}`);
         }
-    }
+    }, [location, searchString, page]);
 
     const debounced = useDebouncedCallback(
         (value) => {
@@ -89,10 +89,6 @@ const OrderOnline = () => {
             placeholder='Search for restaurant, cusine or a dish'
             onKeyUp={(evt: React.ChangeEvent<HTMLInputElement>) => debounced(evt.target.value)} />,
         parentClassNames: 'w-50'
-    }, {
-        id: 'menu3',
-        element: <a className={`nav-link cursor-pointer ${style.navLinkStyle}`} onClick={() => loginWithRedirect()}>Log in</a>,
-        parentClassNames: 'ms-auto'
     }];
     const onRestaurantClick = (restaurantId: string) => {
         const selectedRestaurant = restaurants.find(rest => rest.id === restaurantId);

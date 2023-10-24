@@ -15,8 +15,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Auth0Provider
-    clientId='tdGh5rSn84VvYrEvyYUJgYFrOD77tZmC'
-    domain='collab-with-tushar-raj-dev.uk.auth0.com'
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ''}
+    domain={process.env.REACT_APP_AUTH0_DOMAIN || ''}
     authorizationParams={{
       redirect_uri: window.location.origin
     }}
@@ -34,4 +34,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals(console.log);

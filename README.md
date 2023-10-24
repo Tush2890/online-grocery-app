@@ -11,8 +11,10 @@ You also need to add an `.env` file at the root of your project that should have
 
 - HTTPS=true
 - REACT_APP_API_URL = http://localhost:4000
-- REACT_APP_GOOGLE_API = https://www.googleapis.com/
-- REACT_APP_GG_APP_ID=YOUR_PROJECT_CLIENT_ID
+- REACT_APP_AUTH0_CLIENT_ID = YOUR_AUTH0_CLIENT_ID
+- REACT_APP_AUTH0_DOMAIN = YOUR_AUTH0_DOMAIN
+- SSL_CRT_FILE = YOUR_SERVER_CERTIFICATE_PATH
+- SSL_KEY_FILE = YOUR_SERVER_KEY_PATH
 
 # Getting Started with Create React App
 
