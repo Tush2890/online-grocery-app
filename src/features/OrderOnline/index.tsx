@@ -12,7 +12,7 @@ import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
 import { RESTAURANT_API_URL, TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 const OrderOnline = () => {
     const navigate = useNavigate();
