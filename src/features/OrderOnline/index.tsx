@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Header } from '../Header';
-import style from './orderOnline.module.css';
 import { Dropdown } from '../../components/Dropdown';
 import { Input } from '../../components/Input';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
 import { RESTAURANT_API_URL, TIMEOUT_IN_MILLISECS } from '../../utils/constants';
 import { useDebouncedCallback } from 'use-debounce';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
 const OrderOnline = () => {
     const navigate = useNavigate();
@@ -116,4 +115,4 @@ const OrderOnline = () => {
     )
 }
 
-export default OrderOnline;
+export default withAuthenticationRequired(OrderOnline);

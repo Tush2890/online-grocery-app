@@ -4,6 +4,7 @@ import { Toast } from '../../components/Toast';
 import { useAppSelector } from '../../redux/store';
 import style from './product.module.css';
 import { useNavigate } from 'react-router-dom';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 const MyProduct = () => {
     const navigate = useNavigate();
@@ -45,4 +46,4 @@ const MyProduct = () => {
     )
 }
 
-export default MyProduct;
+export default withAuthenticationRequired(MyProduct);

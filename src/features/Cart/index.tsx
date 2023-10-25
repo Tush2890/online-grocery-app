@@ -7,6 +7,7 @@ import {
     DELIVERY_FEE, SERVICE_CHARGE, getAmountToPay, getProductName,
     getProductPrice, getRestaurant, getTotalPrice
 } from './cart.utils';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 const Cart = () => {
     const [loginForm, setLoginForm] = useState(false);
@@ -116,4 +117,4 @@ const Cart = () => {
     )
 }
 
-export default Cart;
+export default withAuthenticationRequired(Cart);
