@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { MyRestaurant } from '../Restaurant';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setLocation } from '../../redux/app.slice';
-import { setRestaurant, setSearchParam } from '../../redux/restaurant.slice';
+import { clearRestaurants, populateRestaurants, setRestaurant, setSearchParam } from '../../redux/restaurant.slice';
 import axios from 'axios';
 import { Restaurant } from '../../utils/models';
 import { setRestaurantList } from '../../utils/service';
@@ -19,7 +19,7 @@ const OrderOnline = () => {
     const dispatch = useAppDispatch();
     const location = useAppSelector(state => state.appLevel.location);
     const locations = useAppSelector(state => state.appLevel.locations);
-    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const restaurants = useAppSelector(state => state.restaurant.restaurants);
     const searchString = useAppSelector(state => state.restaurant.searchParam);
     const [page, setPage] = useState<number>(0);
 
@@ -42,30 +42,32 @@ const OrderOnline = () => {
         };
     }, []);
 
-    useEffect(() => {
-        fetchRestaurants();
-    }, [page, searchString])
-
     const fetchRestaurants = useCallback(async () => {
         try {
             const response = await axios
                 .get<{ data: Restaurant[] }>(`${RESTAURANT_API_URL}/${location}?searchString=${searchString}&startPage=${page}`);
             if (response.data.data.length > 0) {
-                setRestaurants(prevListOfRestaurants => [...prevListOfRestaurants, ...response.data.data]);
-                setRestaurantList([...restaurants, ...response.data.data]);
+                dispatch(populateRestaurants({
+                    restaurants: response.data.data,
+                    page
+                }));
+            } else{
+                dispatch(clearRestaurants());
             }
         }
         catch (err) {
-            setRestaurants([]);
-            setRestaurantList([]);
             console.error(`Error fetching the restaurants - ${err}`);
         }
     }, [location, searchString, page]);
 
+    useEffect(() => {
+        fetchRestaurants();
+    }, [fetchRestaurants, location, searchString, page]);
+
     const debounced = useDebouncedCallback(
         (value) => {
             dispatch(setSearchParam({ searchParam: value }));
-            setRestaurants([]);
+            dispatch(clearRestaurants());
             setPage(0);
         },
         TIMEOUT_IN_MILLISECS
@@ -89,8 +91,8 @@ const OrderOnline = () => {
             onKeyUp={(evt: React.ChangeEvent<HTMLInputElement>) => debounced(evt.target.value)} />,
         parentClassNames: 'w-50'
     }];
-    const onRestaurantClick = (restaurantId: string) => {
-        const selectedRestaurant = restaurants.find(rest => rest.id === restaurantId);
+    const onRestaurantClick = (restaurantName: string) => {
+        const selectedRestaurant = restaurants.find(rest => rest.Name === restaurantName);
         if (selectedRestaurant) {
             dispatch(setRestaurant({ restaurant: selectedRestaurant }));
         }
@@ -103,11 +105,12 @@ const OrderOnline = () => {
                 <div className='row gy-4 mt-4'>
                     <h2 className='text-start'>Order food online</h2>
                     {restaurants.map(restaurant => (
-                        <MyRestaurant key={restaurant.id} id={restaurant.id}
-                            category={restaurant.category}
-                            name={restaurant.name} rating={restaurant.rating}
-                            onRestaurantClick={() => onRestaurantClick(restaurant.id)}
-                            isOpen={restaurant.isOpen} />
+                        <MyRestaurant key={restaurant.Name}
+                            category={restaurant.Category}
+                            name={restaurant.Name} rating={restaurant.Rating}
+                            onRestaurantClick={() => onRestaurantClick(restaurant.Name)}
+                            isOpen={restaurant.Open}
+                            arrayBuffer={restaurant.ImageFile.data} />
                     ))}
                 </div>
             </div>

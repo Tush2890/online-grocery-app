@@ -1,28 +1,25 @@
 export interface Product {
-    id: string;
-    restaurantId: string;
-    name: string;
-    price: number;
-    currency: string;
-    rating: number;
-    description: string;
-    isVeg: boolean
-}
-
-interface Address {
-    country: string;
-    state: string;
-    city: string;
-    postcode: string;
-    streetAddress: string;
+    RestaurantId: number;
+    Name: string;
+    Price: number;
+    Currency: string;
+    Rating: number;
+    Description: string;
+    Veg: boolean
 }
 
 export interface Restaurant {
-    id: string;
-    name: string;
-    items: Product[];
-    category: string[];
-    rating: number;
-    address: Address;
-    isOpen: boolean;
+    Name: string;
+    ProductId: number;
+    Category: string;
+    Rating: number;
+    Open: boolean;
+    Country: string;
+    State: string;
+    City: string;
+    PostCode: string;
+    StreetAddress: string;
+    Area: string;
+    ImageFile: {type: 'Buffer', data: []};
+    items: Array<Product>;
 }

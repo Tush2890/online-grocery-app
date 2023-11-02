@@ -15,7 +15,7 @@ export const ProductItem = ({ prod }: Props) => {
     const cartProducts = useAppSelector(state => state.cart.products);
 
     const getItemCount = () => {
-        const product = cartProducts.find(product => product.id === prod.id);
+        const product = cartProducts.find(product => product.name === prod.Name);
         let productItemCount = product?.count || 0;
         return productItemCount;
     }
@@ -35,16 +35,16 @@ export const ProductItem = ({ prod }: Props) => {
     return (
         <div className='d-flex gap-2'>
             <img alt='preferenceImage'
-                src={`${process.env.PUBLIC_URL}/${prod.isVeg ? 'veg' : 'non-veg'}.png`}
+                src={`${process.env.PUBLIC_URL}/${prod.Veg ? 'veg' : 'non-veg'}.png`}
                 width={20} height={20} />
             <div className='flex-column'>
-                <h5><b>{prod.name}</b></h5>
-                {getRatingStars(prod.rating)}
-                <p>{CURRENCY[prod.currency]}{prod.price}</p>
+                <h5><b>{prod.Name}</b></h5>
+                {getRatingStars(prod.Rating)}
+                <p>{CURRENCY[prod.Currency]}{prod.Price}</p>
             </div>
             {productItemCount === 0 && <Button btnClassnames={`btn btn-outline-success px-5 ${style.h40}`}
-                btnOnClick={() => dispatch(productAdded({ id: prod.id }))}>ADD</Button>}
-            {productItemCount > 0 && <CartItem productItemCount={productItemCount} productItemId={prod.id} />}
+                btnOnClick={() => dispatch(productAdded({ name: prod.Name }))}>ADD</Button>}
+            {productItemCount > 0 && <CartItem productItemCount={productItemCount} productName={prod.Name} />}
         </div>
     )
 }

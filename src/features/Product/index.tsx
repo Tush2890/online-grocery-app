@@ -12,15 +12,18 @@ const MyProduct = () => {
     const cartProducts = useAppSelector(state => state.cart.products);
     let totalItemsCount = 0;
     cartProducts.forEach(item => totalItemsCount += item.count);
+    const base64String = btoa(new Uint8Array(restaurtant.ImageFile.data).reduce(function (data, byte) {
+        return data + String.fromCharCode(byte);
+    }, ''));
     return (
         <div className='container'>
             <div className='row text-start'>
-                <img src={`${process.env.PUBLIC_URL}/restaurants/${restaurtant.id}.avif`} width={450} height={450} alt='restaurantImage' />
-                <h1 className='mt-2'><b>{restaurtant.name}</b></h1>
-                <p>{restaurtant.category.join(', ')}</p>
-                <p>{restaurtant.address.streetAddress}</p>
+                <img src={`data:image/png;base64,${base64String}`} width={450} height={450} alt='restaurantImage' />
+                <h1 className='mt-2'><b>{restaurtant.Name}</b></h1>
+                <p>{restaurtant.Category}</p>
+                <p>{restaurtant.StreetAddress}</p>
                 <p><span className={style.restaurantStatus}>
-                    {restaurtant.isOpen ? 'Open now' : 'Closed'}
+                    {restaurtant.Open ? 'Open now' : 'Closed'}
                 </span> - 12midnight - 6:45am, 7am - 11:45pm (Today)
                 </p>
                 <div className='d-flex gap-2'>
@@ -31,7 +34,7 @@ const MyProduct = () => {
                 <h2 className='mt-4'><b>Order Online</b></h2>
                 <div className='d-flex flex-column'>
                     {restaurtant.items.map(prod => {
-                        return <ProductItem key={prod.id} prod={prod} />
+                        return <ProductItem key={prod.Name} prod={prod} />
                     })}
                 </div>
                 <Toast className={totalItemsCount > 0 ? 'show' : 'hide'}>

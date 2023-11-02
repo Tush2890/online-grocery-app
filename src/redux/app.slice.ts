@@ -7,8 +7,8 @@ interface AppState {
 }
 
 const initialState: AppState = {
-    location: 'Bengaluru',
-    currency: '₹',
+    location: 'Harrow',
+    currency: '£',
     locations: []
 }
 

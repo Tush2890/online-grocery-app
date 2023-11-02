@@ -5,7 +5,7 @@ import { useAppSelector } from '../../redux/store';
 import { CartItem } from '../CartItem';
 import {
     DELIVERY_FEE, SERVICE_CHARGE, getAmountToPay, getProductName,
-    getProductPrice, getRestaurant, getTotalPrice
+    getProductPrice, getTotalPrice
 } from './cart.utils';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 
@@ -14,7 +14,11 @@ const Cart = () => {
     const [signInForm, setSignInForm] = useState(false);
     const cartProducts = useAppSelector(state => state.cart.products);
     const currency = useAppSelector(state => state.appLevel.currency);
-    const productItems = useAppSelector(state => state.restaurant.restaurant.items);
+    const restaurant = useAppSelector(state => state.restaurant.restaurant);
+    const productItems = restaurant.items;
+    const base64String = btoa(new Uint8Array(restaurant.ImageFile.data).reduce(function (data, byte) {
+        return data + String.fromCharCode(byte);
+    }, ''));
     return (
         <div className='row gap-4 container mt-4 mx-auto'>
             <div className='containerLeft col-lg-7 col-md-6 col-sm-12'>
@@ -69,20 +73,20 @@ const Cart = () => {
             <div className={`containerRight col-lg-4 col-md-5 col-12 ${style.customSection}`}>
                 <div className='d-flex gap-3'>
                     <img
-                        src={`${process.env.PUBLIC_URL}/restaurants/${getRestaurant(productItems, cartProducts[0].id)?.id}.avif`}
+                        src={`data:image/png;base64,${base64String}`}
                         className='col-2' width={50} height={50} alt='restaurantImage' />
                     <div className='flex-column col-10'>
-                        <h5><b>{getRestaurant(productItems, cartProducts[0].id)?.name}</b></h5>
-                        <span>{getRestaurant(productItems, cartProducts[0].id)?.address.streetAddress}</span>
+                        <h5><b>{restaurant.Name}</b></h5>
+                        <span>{restaurant.StreetAddress}</span>
                     </div>
                 </div>
                 {
                     cartProducts.map(prod => (
-                        prod.count > 0 && <div className={`d-flex mt-4`} key={prod.id}>
-                            <div className={`${style.productItemName}`}>{getProductName(productItems, prod.id)}</div>
-                            <CartItem productItemCount={prod.count} productItemId={prod.id} classNames='ms-3' />
+                        prod.count > 0 && <div className={`d-flex mt-4`} key={prod.name}>
+                            <div className={`${style.productItemName}`}>{getProductName(productItems, prod.name)}</div>
+                            <CartItem productItemCount={prod.count} productName={prod.name} classNames='ms-3' />
                             <div className='ms-auto'>
-                                {`${currency}${getProductPrice(productItems, prod.id, prod.count)}`}
+                                {`${currency}${getProductPrice(productItems, prod.name, prod.count)}`}
                             </div>
                         </div>
                     ))
